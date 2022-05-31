@@ -11,6 +11,14 @@ Several options:
 
     ```emacs-lisp
     (quelpa '(org-timestone :repo "thezeroalpha/org-timestone.el" :fetcher github))
+    (require 'org-timestone)
+    ```
+- Use `use-package` with `quelpa-use-package`:
+
+    ```emacs-lisp
+    (use-package org-timestone
+        :quelpa (org-timestone :repo "thezeroalpha/org-timestone.el" :fetcher github)
+        :ensure nil)
     ```
 - Use whatever package manager you prefer, as long as you can install from a Github source
 
@@ -25,7 +33,13 @@ For example, for Org mode only:
         (define-key org-mode-map (kbd "C-c q t") #'org-timestone-set-org-current-time-effective)))
 ```
 
+Or as a global key binding:
+
+```emacs-lisp
+(global-set-key (kbd "C-c q t") #'org-timestone-set-org-current-time-effective)
+```
+
 ## Usage
 Run `org-timestone-set-org-current-time-effective`, and you'll be prompted for a date.
-If you enter a date, Org mode will think that date is the current date.
+If you select a date, Org mode will consider it the current date.
 If you run `keyboard-quit` from inside the prompt (e.g. with `C-g`), you will unset the date (so Org mode will use the _actual_ current time again).
