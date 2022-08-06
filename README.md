@@ -3,6 +3,10 @@ Sometimes I forget to mark tasks as completed when I actually did them, especial
 This script lets you change the current date and time as perceived by Org mode, so you can take notes and complete tasks on a different day.
 The customized date affects the repeater, logging of notes, and the `LAST_REPEAT` property.
 
+## Demo
+
+<video src="https://user-images.githubusercontent.com/8124851/183264770-64ace8fc-fc4e-408f-a4e4-1b28580321e1.mp4"></video>
+
 ## Installation
 Several options:
 
