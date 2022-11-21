@@ -6,8 +6,9 @@
 ;; Homepage: https://github.com/thezeroalpha/org-timestone.el
 ;; Keywords: org
 
-;; Package-Version: 0.1
-;; Package-Requires: ((emacs "24.1"))
+;; Package-Version: 20220531.131636
+;; Package-X-Original-Version: 0.1
+;; Package-Requires: ((emacs "24.3"))
 
 ;;; Commentary:
 
@@ -34,6 +35,19 @@
         (condition-case nil
             (org-read-date t 'totime)
           (quit nil))))
+
+(defun org-timestone-org-todo-wrapper (&optional arg)
+  "Wrapper for org-todo.
+Lets you set a specific time for state change with
+\\[universal-argument] \\[universal-argument]
+\\[universal-argument] \\[universal-argument] prefix ARG."
+  (interactive "P")
+  (cond ((equal arg '(256))
+         (setq org-timestone--current-time-effective (org-read-date t 'totime))
+         (unwind-protect
+             (org-todo)
+           (setq org-timestone--current-time-effective nil)))
+        (t (org-todo arg))))
 
 ;; For the repeater (e.g. +1d, .+2m...)
 (defun org-timestone--org-today-effective (old-org-today)
