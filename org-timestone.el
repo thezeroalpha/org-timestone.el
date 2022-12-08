@@ -6,8 +6,8 @@
 ;; Homepage: https://github.com/thezeroalpha/org-timestone.el
 ;; Keywords: org outlines
 
-;; Package-Version: 0.2
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Version: 0.2.1
+;; Package-Requires: ((emacs "24.4"))
 
 ;;; Commentary:
 
@@ -58,7 +58,7 @@ wrapped for the repeater (e.g. +1d, .+2m...) to work properly."
       (time-to-days org-timestone--current-time-effective)
     (funcall old-org-today)))
 
-(advice-add 'org-today :around #'org-timestone--org-today-effective)
+(advice-add #'org-today :around #'org-timestone--org-today-effective)
 
 (defun org-timestone--current-time-effective (old-org-current-time &rest args)
   "Wrapper around current-time-effective.
@@ -69,19 +69,7 @@ Return the manually set effective time, or calls
   (or org-timestone--current-time-effective
       (apply old-org-current-time args)))
 
-(advice-add 'org-current-time :around #'org-timestone--current-time-effective)
-
-(defun org-timestone--org-time-stamp-format-effective (old-org-time-stamp-format &rest args)
-  "Wrapper around org-time-stamp-format-effective.
-Returns the manually set effective time, or calls
-OLD-ORG-TIME-STAMP-FORMAT with ARGS to get it. Has to be wrapped
- for the LAST_REPEAT property. Determined from line 10482 in
- org.el, function org-auto-repeat-maybe."
-  (if org-timestone--current-time-effective
-      (format-time-string (apply old-org-time-stamp-format args) org-timestone--current-time-effective)
-    (apply old-org-time-stamp-format args)))
-
-(advice-add 'org-time-stamp-format :around #'org-timestone--org-time-stamp-format-effective)
+(advice-add #'org-current-time :around #'org-timestone--current-time-effective)
 
 (provide 'org-timestone)
 ;;; org-timestone.el ends here
